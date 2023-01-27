@@ -32,9 +32,6 @@ for page_number in range(number_of_pages-1):
         ilosc = text[w.start()-7]+text[w.start()-6]+text[w.start()-5]+text[w.start()-4]+text[w.start()-3]+text[w.start()-2].rstrip()
         ilosc = ilosc.split(' ')
  
-# waga zamienic . na , 
-# ilosć usunąć przecinek
-
         if len(kraj)>=2:
             if iterator_pomocniczy % 2==0:
                 waga = str(waga[1])
@@ -42,7 +39,6 @@ for page_number in range(number_of_pages-1):
                 tablica_danych.append([page_number+1, waga,ilosc[1],kraj[0], "Połącz kropki", f'Strona {page_number+1}'])
                 iterator_pomocniczy +=1
             else:
-                print(waga)
                 waga = str(waga)
                 waga = waga.replace('.',',')
                 tablica_danych.append([f'{page_number+1}a',waga,ilosc[1],"", "Połącz kropki", f'Strona {page_number+1}'])
