@@ -6,10 +6,15 @@ import pandas as pd
 reader = PdfReader("sandisk.pdf")
 sandisk_szablon = pd.read_excel('sandisk.xlsx', dtype={'SO Line':str})
 number_of_pages = len(reader.pages)
-page = reader.pages[2]
+page = reader.pages[0]
 text = page.extract_text()
 tablica_danych = []
 dane = pd.DataFrame()
+
+# print(text)
+
+# invoice_number = text.find('BOL')
+# print(text[invoice_number-2,10,1])
 
 
 for page_number in range(number_of_pages-1):
@@ -41,7 +46,7 @@ for page_number in range(number_of_pages-1):
             else:
                 waga = str(waga)
                 waga = waga.replace('.',',')
-                tablica_danych.append([f'{page_number+1}a',waga,ilosc[1],"", "Połącz kropki", f'Strona {page_number+1}'])
+                tablica_danych.append([f'{page_number+1}a',waga,ilosc[1],kraj[1],"", "Połącz kropki", f'Strona {page_number+1}'])
                 iterator_pomocniczy +=1
         else:
  
