@@ -120,7 +120,7 @@ for page_number in range(number_of_pages-1):
 # print(tablica_danych)
 
 sandisk_szablon = sandisk_szablon.sort_values(by=['Delivery Number', 'SO #', 'SO Line'])
-# sandisk_szablon['strona'] = sandisk_szablon.iterrows
+sandisk_szablon['strona'] = sandisk_szablon.iterrows
 
 i = 1
 for index, row in sandisk_szablon.iterrows():
@@ -139,7 +139,6 @@ df_nowa['strona'] = df_dane[0]
 
 
 
-# connected = pd.merge(sandisk_szablon, df_nowa, left_index=True, right_index=True, how='outer')
 connected = pd.merge(sandisk_szablon, df_nowa, left_on='strona', right_on='strona', how='right')
 connected = connected.reindex(columns=['SO #', 'SO Line','Ship To',	'PO #',	'PO Date','Customer Part #','SKU','Ship Qty','Price','Currency','Ship Amt','Weight [kg]','COO Qty','COO','Ship Plant','Actual Ship Date','Estimated Delivery Date','Carrier','Tracking #','Incoterms','Ship To Address','Customer Name','Customer Address','Ship To #','Customer #','End Customer','Order Type','Customer Hier Name','Customer Hier #', 'Card Sub Type','Reporting Segment','Product Line','Delivery Number'
 ])
