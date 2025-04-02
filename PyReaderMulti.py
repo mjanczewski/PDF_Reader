@@ -2,6 +2,8 @@ from pypdf import PdfReader
 import re
 import pandas as pd
 
+# import datetime
+
 
 reader = PdfReader("sandisk.pdf")
 sandisk_szablon = pd.read_excel("sandisk.xlsx", dtype={"SO Line": str})
@@ -39,7 +41,7 @@ for page_number in range(number_of_pages - 1):
             + text[w.start() - 3]
             + text[w.start() - 2].rstrip()
         )
-        print(ilosc)
+        # print(ilosc)
         ilosc = ilosc.split(" ")
 
         if len(kraj) >= 2:
@@ -104,12 +106,17 @@ df_nowa["strona"] = df_dane[0]
 connected = pd.merge(
     sandisk_szablon, df_nowa, left_on="strona", right_on="strona", how="right"
 )
+# connected["Invoice Date"] = pd.to_datetime(connected["Invoice Date"]).dt.date
+connected["Invoice Date"] = pd.to_datetime(connected["Invoice Date"]).dt.strftime(
+    "%d.%m.%Y"
+)
 # connected = connected.reindex(columns=['SO #', 'SO Line','Ship To',	'PO #',	'PO Date','Customer Part #','SKU','Ship Qty','Price','Currency','Ship Amt','Weight [kg]','COO Qty','COO','Ship Plant','Actual Ship Date','Estimated Delivery Date','Carrier','Tracking #','Incoterms','Ship To Address','Customer Name','Customer Address','Ship To #','Customer #','End Customer','Order Type','Customer Hier Name','Customer Hier #', 'Card Sub Type','Reporting Segment','Product Line','Delivery Number'
 # ])
 connected = connected.reindex(
     columns=[
         "SO #",
-        "WD-Sales Order Line #",
+        # "WD-Sales Order Line #",
+        "Sales Order Line #",
         # "Ship To",
         "PO #",
         # "PO Date",
@@ -141,17 +148,19 @@ connected = connected.reindex(
         # "Delivery Number",
         "Invoice #",
         "Invoice Date",
-        "SKU",
+        "SanDisk SKU",
         "Invoice Qty",
         "Weight [kg]",
         "COO Qty",
         "COO",
         "Unit Price",
         "Currency",
-        "Invoice AMt",
+        "Invoice Amt",
         "Delivery #",
     ]
 )
 
 
 connected.to_excel("sandisk_connected.xls", index=None)
+
+# print(connected["Invoice Date"])
